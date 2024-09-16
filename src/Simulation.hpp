@@ -19,11 +19,12 @@ public:
     bool pollEvent(sf::Event &event);
 
     // Test Atom functions
-    void intializeTestAtoms();
+    void intializeTwoTestAtoms();
+    void intializeMultipleTestAtoms(int n);
     void drawTestAtoms();
-    void updateAtoms();
+    void updateTestAtoms();
 
     // variables
     sf::RenderWindow window;
-    std::vector<Atom> atoms;
+    std::vector<TestAtom> atoms;
 };

@@ -2,14 +2,15 @@
 
 #include <SFML/Graphics.hpp>
 
-struct Atom
+struct TestAtom
 {
     sf::Vector2f position;
-    float radius = 5.0f;
+    float radius = 4.0f;
     sf::Vector2f velocity = {0.0f, 0.0f};
     sf::Color color;
+    int colorIndex =0; 
 
-    Atom(sf::Vector2f pos, sf::Color col) 
+    TestAtom(sf::Vector2f pos, sf::Color col) 
         : position(pos), color(col) {}
 };
 

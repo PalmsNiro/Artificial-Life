@@ -1,8 +1,35 @@
 #pragma once
 
+#include <vector>
+#include <random>
+#include <ctime>
+#include <math.h>
+
 namespace Screen_Config
 {
-    int screen_width = 1900;
-    int screen_height = 1000;
-    
+    extern int screen_width;
+    extern int screen_height;
+}
+
+std::vector<std::vector<float>> generate2DRandomArray(int m);
+
+extern const int n;
+extern const float dt;
+extern const float frictionHalfLife;
+extern const float rMax;
+extern const int m;
+extern const std::vector<std::vector<float>> matrix;
+extern const float forceFactor;
+extern const float frictionFactor;
+
+// Inline-Funktion kann in der Header-Datei definiert werden
+inline float force(float r, float a)
+{
+    const float beta = 0.3f;
+    if (r < beta)
+        return r / beta - 1;
+    else if (beta < r && r < 1)
+        return a * (1 - abs(2 * r - 1 - beta) / (1 - beta));
+    else
+        return 0;
 }

@@ -2,12 +2,12 @@
 #include "Simulation.hpp"
 #include "config.hpp"
 
-using namespace Screen_Config;
+using namespace Screen_Config; 
 
 int main()
 {
     Sim sim;
-    sim.intializeTestAtoms();
+    sim.intializeMultipleTestAtoms(n);
     sim.createWindow(screen_width, screen_height, "Test");
 
     while (sim.isWindowOpen())
@@ -23,6 +23,7 @@ int main()
         sim.clearWindow();
 
         sim.drawTestAtoms();
+        sim.updateTestAtoms();
 
         sim.displayWindow();
     }
