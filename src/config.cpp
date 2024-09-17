@@ -1,5 +1,7 @@
 #include "config.hpp"
-#include <cmath>
+// #include <cmath>
+#include <iostream>
+#include <iomanip>
 
 namespace Screen_Config
 {
@@ -10,7 +12,7 @@ namespace Screen_Config
 std::vector<std::vector<float>> generate2DRandomArray(int m)
 {
     std::mt19937 gen(static_cast<unsigned int>(time(0)));
-    std::uniform_real_distribution<float> dis(-3.0f, 3.0f);
+    std::uniform_real_distribution<float> dis(-5.0f, 5.0f);
 
     std::vector<std::vector<float>> array(m, std::vector<float>(m));
 
@@ -41,3 +43,50 @@ const std::vector<sf::Color> colorVector = {
     sf::Color(255, 255, 0), // Gelb
     sf::Color(128, 0, 128)  // Lila
 };
+
+void printColorForceMatrix(const std::vector<std::vector<float>> &matrix, const std::vector<sf::Color> &colors)
+{
+    const int m = matrix.size();
+    const int cellWidth = 10; // Width of each cell in the output
+
+    // Print separator
+    std::cout << std::string(cellWidth * (m + 1), '-') << "\n";
+
+    // Print header
+    std::cout << std::setw(cellWidth) << "Color";
+    for (int i = 0; i < m; ++i)
+    {
+        std::cout << std::setw(cellWidth) << "Color " + std::to_string(i);
+    }
+    std::cout << "\n";
+
+    // Print separator
+    std::cout << std::string(cellWidth * (m + 1), '-') << "\n";
+
+    // Print matrix rows
+    for (int i = 0; i < m; ++i)
+    {
+        // Print row header (color name or index)
+        std::cout << std::setw(cellWidth) << ("Color " + std::to_string(i));
+
+        // Print row values
+        for (int j = 0; j < m; ++j)
+        {
+            std::cout << std::setw(cellWidth) << std::fixed << std::setprecision(2) << matrix[i][j];
+        }
+        std::cout << "\n";
+    }
+
+    // Print color information
+    std::cout << "\nColor Information:\n";
+    for (int i = 0; i < m; ++i)
+    {
+        std::cout << "Color " << i << ": RGB("
+                  << static_cast<int>(colors[i].r) << ", "
+                  << static_cast<int>(colors[i].g) << ", "
+                  << static_cast<int>(colors[i].b) << ")\n";
+    }
+
+    // Print separator
+    std::cout << std::string(cellWidth * (m + 1), '-') << "\n";
+}

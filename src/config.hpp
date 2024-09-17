@@ -36,3 +36,5 @@ inline float force(float r, float a)
 }
 
 extern const std::vector<sf::Color> colorVector;
+
+extern void printColorForceMatrix(const std::vector<std::vector<float>>& matrix, const std::vector<sf::Color>& colors);

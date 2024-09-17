@@ -1,4 +1,3 @@
-// #include <SFML/Graphics.hpp>
 #include "Simulation.hpp"
 #include "config.hpp"
 #include <iostream>
@@ -10,10 +9,10 @@ int main()
     Sim sim;
     // sim.intializeMultipleTestAtoms(n);
     sim.intializeMultipleColoredTestAtoms(300, m);
+    sim.createWindow(screen_width, screen_height, "Test");
     std::cout << "atoms empty?" << (sim.atoms.empty() ? "yes" : "no") << std::endl;
     std::cout << "atom size: " << sim.atoms.size() << std::endl;
-    sim.createWindow(screen_width, screen_height, "Test");
-
+    printColorForceMatrix(matrix, colorVector);
     while (sim.isWindowOpen())
     {
         for (auto event = sf::Event{}; sim.pollEvent(event);)
@@ -31,6 +30,7 @@ int main()
                 else if (event.key.code == sf::Keyboard::R)
                 {
                     sim.randomizeParticles();
+                    printColorForceMatrix(matrix, colorVector);
                 }
             }
         }

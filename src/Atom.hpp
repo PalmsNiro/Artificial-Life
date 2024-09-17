@@ -13,5 +13,3 @@ struct TestAtom
     TestAtom(sf::Vector2f pos, sf::Color col, int colInd) 
         : position(pos), color(col), colorIndex(colInd) {}
 };
-
-
