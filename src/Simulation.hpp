@@ -26,6 +26,9 @@ public:
     void updateVelocity();
     void updateAtoms();
 
+    sf::Vector2f calculatePeriodicDistance(const sf::Vector2f &pos1, const sf::Vector2f &pos2, const sf::Vector2f &bounds);
+    void applyPeriodicBoundaryConditions(sf::Vector2f &position, const sf::Vector2f &bounds);
+
     // variables
     sf::RenderWindow window;
     std::vector<TestAtom> atoms;
