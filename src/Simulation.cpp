@@ -172,3 +172,16 @@ void Sim::applyPeriodicBoundaryConditions(sf::Vector2f &position, const sf::Vect
     position.x = fmod(position.x + bounds.x, bounds.x);
     position.y = fmod(position.y + bounds.y, bounds.y);
 }
+
+void Sim::randomizeParticles()
+{
+    std::mt19937 gen(static_cast<unsigned int>(time(0)));
+    std::uniform_real_distribution<float> disW(0.0f, 1900.0f);
+    std::uniform_real_distribution<float> disH(0.0f, 1000.0f);
+    matrix = generate2DRandomArray(m);
+    for (auto &at : atoms)
+    {
+        at.position = {disW(gen), disH(gen)};
+        at.velocity = {0, 0};
+    }
+}

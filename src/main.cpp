@@ -9,7 +9,7 @@ int main()
 {
     Sim sim;
     // sim.intializeMultipleTestAtoms(n);
-    sim.intializeMultipleColoredTestAtoms(300, 5);
+    sim.intializeMultipleColoredTestAtoms(300, m);
     std::cout << "atoms empty?" << (sim.atoms.empty() ? "yes" : "no") << std::endl;
     std::cout << "atom size: " << sim.atoms.size() << std::endl;
     sim.createWindow(screen_width, screen_height, "Test");
@@ -21,6 +21,17 @@ int main()
             if (event.type == sf::Event::Closed)
             {
                 sim.closeWindow();
+            }
+            else if (event.type == sf::Event::KeyPressed)
+            {
+                if (event.key.code == sf::Keyboard::Escape)
+                {
+                    sim.closeWindow();
+                }
+                else if (event.key.code == sf::Keyboard::R)
+                {
+                    sim.randomizeParticles();
+                }
             }
         }
 

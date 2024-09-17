@@ -19,7 +19,7 @@ extern const float dt;
 extern const float frictionHalfLife;
 extern const float rMax;
 extern const int m;
-extern const std::vector<std::vector<float>> matrix;
+extern std::vector<std::vector<float>> matrix;
 extern const float forceFactor;
 extern const float frictionFactor;
 
