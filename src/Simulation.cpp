@@ -100,52 +100,75 @@ void Sim::drawTestAtoms()
 
 void Sim::updateVelocity()
 {
+    sf::Vector2f bounds(Screen_Config::screen_width, Screen_Config::screen_height);
+
     for (auto &at1 : atoms)
     {
-        float totalForceX = 0;
-        float totalForceY = 0;
+        sf::Vector2f totalForce(0, 0);
         for (auto &at2 : atoms)
         {
             if (&at1 == &at2)
                 continue;
-            const float rx = at2.position.x - at1.position.x;
-            const float ry = at2.position.y - at1.position.y;
-            const float r = hypot(rx, ry);
+            sf::Vector2f diff = calculatePeriodicDistance(at1.position, at2.position, bounds);
+            float r = hypot(diff.x, diff.y);
             if (r > 0 && r < rMax)
             {
-                // std::cout << "calc force" << std::endl;
-                const float f = force(r / rMax, matrix[at1.colorIndex][at2.colorIndex]);
-                totalForceX += rx / r * f;
-                totalForceY += ry / r * f;
-                // std::cout << "total Force1 calculated: (" << totalForceX << "; " << totalForceY << ")" << std::endl;
+                float f = force(r / rMax, matrix[at1.colorIndex][at2.colorIndex]);
+                totalForce += diff / r * f;
             }
         }
-        // std::cout << "total Force1 after if: (" << totalForceX << "; " << totalForceY << ")" << std::endl;
-        // std::cout << "rMax and forceFactor: (" << rMax << "; " << forceFactor << ")" << std::endl;
-        totalForceX *= rMax * forceFactor;
-        totalForceY *= rMax * forceFactor;
-        // std::cout << "total Force2 calculated: (" << totalForceX << "; " << totalForceY << ")" << std::endl;
 
-        at1.velocity.x *= frictionFactor;
-        at1.velocity.y *= frictionFactor;
+        totalForce *= rMax * forceFactor;
 
-        at1.velocity.x += totalForceX * dt;
-        at1.velocity.y += totalForceY * dt;
-        // std::cout << "velocity calculated: (" << at1.velocity.x << "; " << at1.velocity.y << ")" << std::endl;
+        at1.velocity *= frictionFactor;
+        at1.velocity += totalForce * dt;
     }
 }
 
 void Sim::updateAtoms()
 {
+    sf::Vector2f bounds(Screen_Config::screen_width, Screen_Config::screen_height);
+
     // update velocities
     updateVelocity();
+
     // update positions
     for (auto &at : atoms)
     {
-        // std::cout << "velocity: (" << at.velocity.x << "; " << at.velocity.y << ") " << std::endl;
-        // std::cout << "position before: (" << at.position.x << "; " << at.position.y << ") ";
-        at.position.x += at.velocity.x * dt;
-        at.position.y += at.velocity.y * dt;
-        // std::cout << "position after: (" << at.position.x << "; " << at.position.y << ")" << std::endl;
+        at.position += at.velocity * dt;
+        applyPeriodicBoundaryConditions(at.position, bounds);
     }
+}
+
+sf::Vector2f Sim::calculatePeriodicDistance(const sf::Vector2f &pos1, const sf::Vector2f &pos2, const sf::Vector2f &bounds)
+{
+    sf::Vector2f diff = pos2 - pos1;
+
+    // X-axis
+    if (diff.x > bounds.x / 2)
+    {
+        diff.x -= bounds.x;
+    }
+    else if (diff.x < -bounds.x / 2)
+    {
+        diff.x += bounds.x;
+    }
+
+    // Y-axis
+    if (diff.y > bounds.y / 2)
+    {
+        diff.y -= bounds.y;
+    }
+    else if (diff.y < -bounds.y / 2)
+    {
+        diff.y += bounds.y;
+    }
+
+    return diff;
+}
+
+void Sim::applyPeriodicBoundaryConditions(sf::Vector2f &position, const sf::Vector2f &bounds)
+{
+    position.x = fmod(position.x + bounds.x, bounds.x);
+    position.y = fmod(position.y + bounds.y, bounds.y);
 }
