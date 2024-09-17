@@ -8,10 +8,10 @@ struct TestAtom
     float radius = 4.0f;
     sf::Vector2f velocity = {0.0f, 0.0f};
     sf::Color color;
-    int colorIndex =0; 
+    int colorIndex; 
 
-    TestAtom(sf::Vector2f pos, sf::Color col) 
-        : position(pos), color(col) {}
+    TestAtom(sf::Vector2f pos, sf::Color col, int colInd) 
+        : position(pos), color(col), colorIndex(colInd) {}
 };
 
 

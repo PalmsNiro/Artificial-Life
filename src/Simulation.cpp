@@ -38,8 +38,8 @@ bool Sim::pollEvent(sf::Event &event)
 
 void Sim::intializeTwoTestAtoms()
 {
-    TestAtom atom1(sf::Vector2f(100.0f, 100.0f), sf::Color::Red);
-    TestAtom atom2(sf::Vector2f(110.0f, 110.0f), sf::Color::Red);
+    TestAtom atom1(sf::Vector2f(100.0f, 100.0f), sf::Color::Red, 0);
+    TestAtom atom2(sf::Vector2f(110.0f, 110.0f), sf::Color::Red, 0);
 
     atoms.push_back(atom1);
     atoms.push_back(atom2);
@@ -54,7 +54,35 @@ void Sim::intializeMultipleTestAtoms(int n)
     {
         float posX = disW(gen);
         float posY = disH(gen);
-        atoms.push_back(TestAtom(sf::Vector2f(posX, posY), sf::Color::Red));
+        atoms.push_back(TestAtom(sf::Vector2f(posX, posY), sf::Color::Red, 0));
+    }
+}
+
+void Sim::intializeMultipleColoredTestAtoms(int n, int c)
+{
+    std::mt19937 gen(static_cast<unsigned int>(time(0)));
+    std::uniform_real_distribution<float> disW(0.0f, 1900.0f);
+    std::uniform_real_distribution<float> disH(0.0f, 1000.0f);
+
+    for (int i = 0; i < c; i++) // colors
+    {
+        // std::cout << "Color index: " << i << ", Color: ("
+        //           << static_cast<int>(colorVector[i].r) << ", "
+        //           << static_cast<int>(colorVector[i].g) << ", "
+        //           << static_cast<int>(colorVector[i].b) << ")" << std::endl;
+
+        for (int j = 0; j < n; j++) // number of Atoms
+        {
+            float posX = disW(gen);
+            float posY = disH(gen);
+            atoms.push_back(TestAtom(sf::Vector2f(posX, posY), colorVector[i], i));
+
+            // if (j == 0)
+            // { // Print info for the first atom of each color
+            //     std::cout << "  First atom position: (" << posX << ", " << posY
+            //               << "), Color index: " << i << std::endl;
+            // }
+        }
     }
 }
 
@@ -62,18 +90,16 @@ void Sim::drawTestAtoms()
 {
     for (const auto &at : atoms)
     {
+        // std::cout << "atom color: " << at.color.toInteger() << std::endl;
         sf::CircleShape circle(at.radius);
         circle.setPosition(at.position);
         circle.setFillColor(at.color);
-
         window.draw(circle);
     }
 }
 
-void Sim::updateTestAtoms()
+void Sim::updateVelocity()
 {
-    // update velocities
-
     for (auto &at1 : atoms)
     {
         float totalForceX = 0;
@@ -107,7 +133,12 @@ void Sim::updateTestAtoms()
         at1.velocity.y += totalForceY * dt;
         // std::cout << "velocity calculated: (" << at1.velocity.x << "; " << at1.velocity.y << ")" << std::endl;
     }
+}
 
+void Sim::updateAtoms()
+{
+    // update velocities
+    updateVelocity();
     // update positions
     for (auto &at : atoms)
     {

@@ -4,6 +4,7 @@
 #include <random>
 #include <ctime>
 #include <math.h>
+#include <SFML/Graphics.hpp>
 
 namespace Screen_Config
 {
@@ -33,3 +34,5 @@ inline float force(float r, float a)
     else
         return 0;
 }
+
+extern const std::vector<sf::Color> colorVector;

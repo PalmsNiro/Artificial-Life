@@ -21,8 +21,10 @@ public:
     // Test Atom functions
     void intializeTwoTestAtoms();
     void intializeMultipleTestAtoms(int n);
+    void intializeMultipleColoredTestAtoms(int n, int c);
     void drawTestAtoms();
-    void updateTestAtoms();
+    void updateVelocity();
+    void updateAtoms();
 
     // variables
     sf::RenderWindow window;
