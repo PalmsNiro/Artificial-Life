@@ -101,7 +101,7 @@ void Sim::drawTestAtoms()
 // void Sim::updateVelocity()
 // {
 //     sf::Vector2f bounds(Screen_Config::screen_width, Screen_Config::screen_height);
-
+//
 //     for (auto &at1 : atoms)
 //     {
 //         sf::Vector2f totalForce(0, 0);
@@ -117,13 +117,14 @@ void Sim::drawTestAtoms()
 //                 totalForce += diff / r * f;
 //             }
 //         }
-
+//
 //         totalForce *= rMax * forceFactor;
-
+//
 //         at1.velocity *= frictionFactor;
 //         at1.velocity += totalForce * dt;
 //     }
 // }
+
 void Sim::updateVelocity()
 {
     updateGrid();
@@ -218,11 +219,16 @@ void Sim::randomizeParticles()
     }
 }
 
-// void updateGrid()
-// {
-//     grid.clear();
-//     for (size_t i = 0; i < atoms.size(); ++i)
-//     {
-//         grid.insertParticle(i, atoms[i].position);
-//     }
-// }
+void Sim::drawGrid()
+{
+    grid.draw(window);
+}
+
+void Sim::updateGrid()
+{
+    grid.clear();
+    for (size_t i = 0; i < atoms.size(); ++i)
+    {
+        grid.insertParticle(i, atoms[i].position);
+    }
+}

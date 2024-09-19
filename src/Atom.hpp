@@ -5,7 +5,7 @@
 struct TestAtom
 {
     sf::Vector2f position;
-    float radius = 4.0f;
+    float radius = 2.0f;
     sf::Vector2f velocity = {0.0f, 0.0f};
     sf::Color color;
     int colorIndex; 

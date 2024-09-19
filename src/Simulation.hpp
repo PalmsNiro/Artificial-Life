@@ -27,28 +27,17 @@ public:
     void updateVelocity();
     void updateAtoms();
 
-    sf::Vector2f calculatePeriodicDistance(const sf::Vector2f &pos1, const sf::Vector2f &pos2, const sf::Vector2f &bounds);
     void applyPeriodicBoundaryConditions(sf::Vector2f &position, const sf::Vector2f &bounds);
     void randomizeParticles();
     // variables
-    sf::RenderWindow window;
 
-    std::vector<TestAtom> atoms;
-
-    void drawGrid()
-    {
-        grid.draw(window);
-    }
+    void drawGrid();
 
 private:
+    std::vector<TestAtom> atoms;
+    sf::RenderWindow window;
     UniformGrid grid;
+    sf::Vector2f calculatePeriodicDistance(const sf::Vector2f &pos1, const sf::Vector2f &pos2, const sf::Vector2f &bounds);
 
-    void updateGrid()
-    {
-        grid.clear();
-        for (size_t i = 0; i < atoms.size(); ++i)
-        {
-            grid.insertParticle(i, atoms[i].position);
-        }
-    }
+    void updateGrid();
 };
