@@ -3,6 +3,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Atom.hpp"
+#include "Space_Partitioning.hpp"
 
 class Sim
 {
@@ -31,5 +32,17 @@ public:
     void randomizeParticles();
     // variables
     sf::RenderWindow window;
+
     std::vector<TestAtom> atoms;
+private:
+    UniformGrid grid;
+
+    void updateGrid()
+    {
+        grid.clear();
+        for (size_t i = 0; i < atoms.size(); ++i)
+        {
+            grid.insertParticle(i, atoms[i].position);
+        }
+    }
 };

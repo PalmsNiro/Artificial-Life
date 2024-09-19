@@ -2,7 +2,7 @@
 #include "Simulation.hpp"
 #include "config.hpp"
 
-Sim::Sim() {};
+Sim::Sim() : grid(rMax) {};
 Sim::~Sim() {};
 
 void Sim::createWindow(int width, int height, const std::string &title)
@@ -98,19 +98,52 @@ void Sim::drawTestAtoms()
     }
 }
 
+// void Sim::updateVelocity()
+// {
+//     sf::Vector2f bounds(Screen_Config::screen_width, Screen_Config::screen_height);
+
+//     for (auto &at1 : atoms)
+//     {
+//         sf::Vector2f totalForce(0, 0);
+//         for (auto &at2 : atoms)
+//         {
+//             if (&at1 == &at2)
+//                 continue;
+//             sf::Vector2f diff = calculatePeriodicDistance(at1.position, at2.position, bounds);
+//             float r = hypot(diff.x, diff.y);
+//             if (r > 0 && r < rMax)
+//             {
+//                 float f = force(r / rMax, matrix[at1.colorIndex][at2.colorIndex]);
+//                 totalForce += diff / r * f;
+//             }
+//         }
+
+//         totalForce *= rMax * forceFactor;
+
+//         at1.velocity *= frictionFactor;
+//         at1.velocity += totalForce * dt;
+//     }
+// }
 void Sim::updateVelocity()
 {
+    updateGrid();
     sf::Vector2f bounds(Screen_Config::screen_width, Screen_Config::screen_height);
 
-    for (auto &at1 : atoms)
+    for (size_t i = 0; i < atoms.size(); ++i)
     {
+        auto &at1 = atoms[i];
         sf::Vector2f totalForce(0, 0);
-        for (auto &at2 : atoms)
+
+        auto neighbors = grid.getNeighbors(at1.position);
+        for (int neighborIndex : neighbors)
         {
-            if (&at1 == &at2)
+            if (i == static_cast<size_t>(neighborIndex))
                 continue;
+
+            auto &at2 = atoms[neighborIndex];
             sf::Vector2f diff = calculatePeriodicDistance(at1.position, at2.position, bounds);
             float r = hypot(diff.x, diff.y);
+
             if (r > 0 && r < rMax)
             {
                 float f = force(r / rMax, matrix[at1.colorIndex][at2.colorIndex]);
@@ -119,7 +152,6 @@ void Sim::updateVelocity()
         }
 
         totalForce *= rMax * forceFactor;
-
         at1.velocity *= frictionFactor;
         at1.velocity += totalForce * dt;
     }
@@ -185,3 +217,12 @@ void Sim::randomizeParticles()
         at.velocity = {0, 0};
     }
 }
+
+// void updateGrid()
+// {
+//     grid.clear();
+//     for (size_t i = 0; i < atoms.size(); ++i)
+//     {
+//         grid.insertParticle(i, atoms[i].position);
+//     }
+// }
