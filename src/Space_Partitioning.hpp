@@ -69,4 +69,48 @@ public:
 
         return neighbors;
     }
+
+    void draw(sf::RenderWindow &window) const
+    {
+        sf::Color gridColor(100, 100, 200); // Halbtransparentes Grau
+
+        // Vertikale Linien
+        for (int x = 0; x <= gridWidth; ++x)
+        {
+            sf::Vertex line[] = {
+                sf::Vertex(sf::Vector2f(x * cellSize, 0), gridColor),
+                sf::Vertex(sf::Vector2f(x * cellSize, Screen_Config::screen_height), gridColor)};
+            window.draw(line, 2, sf::Lines);
+        }
+
+        // Horizontale Linien
+        for (int y = 0; y <= gridHeight; ++y)
+        {
+            sf::Vertex line[] = {
+                sf::Vertex(sf::Vector2f(0, y * cellSize), gridColor),
+                sf::Vertex(sf::Vector2f(Screen_Config::screen_width, y * cellSize), gridColor)};
+            window.draw(line, 2, sf::Lines);
+        }
+
+        // Optional: Zeichne die Anzahl der Partikel in jeder Zelle
+        // sf::Font font;
+        // if (font.loadFromFile("path/to/your/font.ttf"))
+        // { // Stellen Sie sicher, dass Sie einen gültigen Pfad zu einer Schriftart angeben
+        //     for (int y = 0; y < gridHeight; ++y)
+        //     {
+        //         for (int x = 0; x < gridWidth; ++x)
+        //         {
+        //             int index = y * gridWidth + x;
+        //             int count = grid[index].size();
+        //             if (count > 0)
+        //             {
+        //                 sf::Text text(std::to_string(count), font, 10);
+        //                 text.setPosition(x * cellSize + 2, y * cellSize + 2);
+        //                 text.setFillColor(sf::Color::White);
+        //                 window.draw(text);
+        //             }
+        //         }
+        //     }
+        // }
+    }
 };

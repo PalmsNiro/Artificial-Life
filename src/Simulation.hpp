@@ -34,6 +34,12 @@ public:
     sf::RenderWindow window;
 
     std::vector<TestAtom> atoms;
+
+    void drawGrid()
+    {
+        grid.draw(window);
+    }
+
 private:
     UniformGrid grid;
 

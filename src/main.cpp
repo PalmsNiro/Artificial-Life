@@ -15,6 +15,7 @@ int main()
     printColorForceMatrix(matrix, colorVector);
 
     // Create Grid here later, ig?!
+    bool showGrid = false;
 
     // Main loop and event handeling
     while (sim.isWindowOpen())
@@ -36,10 +37,17 @@ int main()
                     sim.randomizeParticles();
                     printColorForceMatrix(matrix, colorVector);
                 }
+                else if (event.key.code == sf::Keyboard::G)
+                {
+                    showGrid = !showGrid;
+                }
             }
         }
 
         sim.clearWindow();
+
+        if (showGrid)
+            sim.drawGrid();
 
         sim.drawTestAtoms();
         sim.updateAtoms();
