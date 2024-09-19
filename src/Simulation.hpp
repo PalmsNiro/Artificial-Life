@@ -27,7 +27,6 @@ public:
     void updateVelocity();
     void updateAtoms();
 
-    void applyPeriodicBoundaryConditions(sf::Vector2f &position, const sf::Vector2f &bounds);
     void randomizeParticles();
     // variables
 
@@ -37,6 +36,7 @@ private:
     std::vector<TestAtom> atoms;
     sf::RenderWindow window;
     UniformGrid grid;
+    void applyPeriodicBoundaryConditions(sf::Vector2f &position, const sf::Vector2f &bounds);
     sf::Vector2f calculatePeriodicDistance(const sf::Vector2f &pos1, const sf::Vector2f &pos2, const sf::Vector2f &bounds);
 
     void updateGrid();
