@@ -3,6 +3,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Atom.hpp"
+#include "Space_Partitioning.hpp"
 
 class Sim
 {
@@ -26,10 +27,17 @@ public:
     void updateVelocity();
     void updateAtoms();
 
-    sf::Vector2f calculatePeriodicDistance(const sf::Vector2f &pos1, const sf::Vector2f &pos2, const sf::Vector2f &bounds);
-    void applyPeriodicBoundaryConditions(sf::Vector2f &position, const sf::Vector2f &bounds);
     void randomizeParticles();
     // variables
-    sf::RenderWindow window;
+
+    void drawGrid();
+
+private:
     std::vector<TestAtom> atoms;
+    sf::RenderWindow window;
+    UniformGrid grid;
+    void applyPeriodicBoundaryConditions(sf::Vector2f &position, const sf::Vector2f &bounds);
+    sf::Vector2f calculatePeriodicDistance(const sf::Vector2f &pos1, const sf::Vector2f &pos2, const sf::Vector2f &bounds);
+
+    void updateGrid();
 };
