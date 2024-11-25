@@ -37,11 +37,11 @@ cd bin
 # Keybinds
 
 ## Controls
-| Control          | Keybind       | 
-| -------------    | ------------- |
-| reset &randomize | R             | 
-| show grid        | G             |
-| close window     | ESC           |
+| Control           | Keybind       | 
+| ----------------- | ------------- |
+| reset & randomize | R             | 
+| show grid         | G             |
+| close window      | ESC           |
 
 
 
