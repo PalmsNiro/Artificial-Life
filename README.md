@@ -39,3 +39,7 @@ cd bin
 | show grid        | G             |
 | close window     | ESC           |
 
+
+# Demo
+
+![til](./utils/Artificial-Life.gif)
