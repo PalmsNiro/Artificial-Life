@@ -1,3 +1,7 @@
+# Demo
+
+![til](./utils/Artificial-Life.gif)
+
 # Compilation
 CMake requires `build` directory in Project Root
 ```
@@ -40,6 +44,4 @@ cd bin
 | close window     | ESC           |
 
 
-# Demo
 
-![til](./utils/Artificial-Life.gif)
