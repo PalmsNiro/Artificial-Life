@@ -30,6 +30,16 @@ cd bin
 ./Particle_Life.exe
 ```
 
+# Keybinds
+
+## Controls
+| Control          | Keybind       | 
+| -------------    | ------------- |
+| reset &randomize | R             | 
+| show grid        | G             |
+| close window     | ESC           |
+
+
 # Demo
 
 ![til](./utils/Artificial-Life.gif)
